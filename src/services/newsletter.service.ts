@@ -5,7 +5,7 @@ class NewsletterService {
 
     async subscribeToNewsletter(email: string){
        await nodemailer.sendMail({
-        from: "newsletter@example.email",
+        from: "jaron.beatty5@ethereal.email",
         subject: 'Subscribed to newsletter',
         text: 'You have successfully subscribed to newsletter',
         to: `${email}`
@@ -16,7 +16,7 @@ class NewsletterService {
 
     async unsubscribeFromNewsletter(email:string){
            await nodemailer.sendMail({
-        from: "newsletter@example.email",
+        from: "jaron.beatty5@ethereal.email",
         subject: 'Unsubscribed to newsletter',
         text: 'You have successfully sunsubscribed to newsletter',
         to: `${email}`
