@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1","start": "tsx ./src/index.ts"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "tsx ./src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -19,9 +20,14 @@
   "description": "",
   "dependencies": {
     "@types/express": "^5.0.3",
+    "@types/nodemailer": "^6.4.17",
+    "@types/pg": "^8.15.4",
     "dotenv": "^17.0.0",
     "express": "^5.1.0",
+    "nodemailer": "^7.0.3",
+    "pg": "^8.16.3",
     "tsx": "^4.20.3",
+    "typeorm": "^0.3.25",
     "typescript": "^5.8.3"
   }
 }
