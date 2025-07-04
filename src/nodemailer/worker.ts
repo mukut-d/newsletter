@@ -1,7 +1,7 @@
 import {Worker} from "bullmq"
 import config from "../config"
 import processor from "./"
-
+import {BullMQOtel} from "bullmq-otel"
 
 const {bullmqConfig} = config
 
