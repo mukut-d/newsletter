@@ -9,7 +9,8 @@ const {bullmqConfig} = config
 export function initWorker() {
     const worker = new Worker(bullmqConfig.queueName, processor, {
         connection: bullmqConfig.connection,
-        concurrency: bullmqConfig.concurrency
+        concurrency: bullmqConfig.concurrency,
+        telemetry: new BullMQOtel('example-tracer')
     })
 
     worker.on('completed', (job) => {
