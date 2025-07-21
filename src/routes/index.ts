@@ -4,7 +4,7 @@ import newsletterRoutes from "./newsletter.route";
 
 const router = express.Router();
 
-router.use("./api/newsletter", newsletterRoutes)
+router.use("/api/newsletter", newsletterRoutes)
 
 
 export default router

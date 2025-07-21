@@ -10,11 +10,12 @@ const {bullmqConfig}  = config
 class NewsletterService {
    private queue: Queue;
    private subscribedUserCRUD: typeof SubscribedUserCrud;
+   private cronPattern: '0 0 12 * * 5';
 
     constructor() {
       this.queue = new Queue<NodemailerInterface>(bullmqConfig.queueName, {
          connection: bullmqConfig.connection,
-         telemetry: new BullMQOtel('example-tracer')
+         telemetry: new BullMQOtel('newsletter-tracer')
       })
 
 
@@ -37,6 +38,8 @@ class NewsletterService {
 
        console.log(`Enqueued an email sending`)
 
+       await this.startSendingWeeklyEmails(email);
+
        return subscribedUser;
     }
 
@@ -47,16 +50,38 @@ class NewsletterService {
          return false;
       }
 
-           await this.queue.add('send-simple',{
-        from: "jaron.beatty5@ethereal.email",
-        subject: 'Unsubscribed to newsletter',
+      await this.queue.add('send-simple',{
+        from: "mukut.m.das2000@gmail.com",
+        subject: 'Unsubscribed from a newsletter',
         text: 'You have successfully sunsubscribed to newsletter',
         to: `${email}`
        })
 
        console.log(`Enqueued an email sending`);
 
+       const result = await this.stopSendingWeeklyEmails(email);
+       console.log(result ? `scheduler for email ${email} removed` : `scheduler for email: ${email} not found`);
+
        return removedUser;
+    }
+
+    private async startSendingWeeklyEmails(email: string){
+      await this.queue.upsertJobScheduler(
+         `${email}`,
+         {pattern: this.cronPattern},
+         {name: 'send-weekly-newsletter',
+            data: {
+               from: 'newsletter@example.email',
+               subject: 'weekly newsletter',
+               text: 'newsletter',
+               to: `${email}`
+            }
+         }
+      )
+    }
+
+    private async stopSendingWeeklyEmails(email: string){
+      return this.queue.removeJobScheduler(`${email}`)
     }
 
 }

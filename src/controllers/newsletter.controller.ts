@@ -8,6 +8,7 @@ class NewsletterController {
     }
 
     async subscribeToNewsletter(req: Request, res: Response, next: NextFunction) {
+        console.log("subscribe api hits");
         try {
             const subscribedUser = await NewsletterService.subscribeToNewsletter(req.body.email);
             if (!subscribedUser) {
